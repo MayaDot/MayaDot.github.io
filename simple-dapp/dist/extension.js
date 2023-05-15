@@ -37,6 +37,7 @@ async function web3_wallet_login() {
         await provider.send("eth_requestAccounts", []);
         console.log("Connected!!");
         // Get the User Ethereum address
+        // TODO: In production we should change this to be the address reported by the user in Turbotax!!!!
         const address = await provider.getSigner().getAddress();
         console.log(address);
 
@@ -46,20 +47,28 @@ async function web3_wallet_login() {
         const message = "Your public key is:\n" + address + " \n\nThe timestamp is: \n" + ts + "\n\nA random string to sign is: \n" + hashed_string
         console.log("Message: " + message);
         // Request the user to sign it
-        const signature = await provider.getSigner().signMessage(message);
-        // Got the signature
-        console.log("The signature: " + signature);
+        try {
+            const signature = await provider.getSigner().signMessage(message);
+            // Got the signature
+            console.log("The signature: " + signature);
 
-        const verification = await ethers.utils.verifyMessage(message, signature)
+            const verification = await ethers.utils.verifyMessage(message, signature)
 
-        console.log("Verification: " + verification)
+            console.log("Verification: " + verification)
 
-        if (verification == address) {
-            alert("Verified successfully")
+            if (verification == address) {
+                // TODO: in production the address should be the address reported in TurboTax
+                alert("Verified successfully")
 
-        }
-        else {
-            alert("Failed to verify")
-        }
+            }
+            else {
+                alert("Failed to verify")
+            }
+          } catch (error) {
+            console.log(error);
+            alert("Sign-in process failed");
+          }
+        
+        
     }
 }

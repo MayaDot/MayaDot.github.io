@@ -12,7 +12,10 @@ Here's what you need to do to get it to work:
 7) Install http-server (npm install -g http-server)
 8) cd simple-dapp
 9) run "npx webpack"
-10) run "http-server"
+10) run "npx http-server"
 11) In your browser, go to http://localhost:8080/dist/
 12) Open the devtools console in the browser (inspect the webpage and go to the console option)
 When you click "Login with MetaMask", your Metamask wallet will pop up and ask you to sign the message generated in the index.html file.
+
+
+**In production - change the address to the address reported by the user on TurboTax!**
