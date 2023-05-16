@@ -4,11 +4,11 @@ function isMobileDevice() {
 
 function openApp() {
     const scheme = 'metamask:';
-    const fallbackUrl = isMobileDevice() ? 'https://metamask.app.link/' : 'https://metamask.io/';
+    const fallbackUrl = 'https://metamask.app.link/'
 
     const a = document.createElement('a');
     a.rel = 'noopener noreferrer';
-    a.target = 'eth_requestAccounts';//'_blank';
+    a.target = '_blank';
     a.href = scheme;
 
     setTimeout(() => {
@@ -39,8 +39,24 @@ function web3_check_existing_wallet() {
                 alert("df")
               }
         }
+        if (isMobile) {
+            window.addEventListener('load', () => {
+              if (typeof window.ethereum !== 'undefined') {
+                if (window.ethereum.isMetaMask) {
+                  console.log("MetaMask spotted");
+                  alert('MetaMask spotted')
+                } else {
+                  console.log("not MetaMask.");
+                  alert('not MetaMask.')
+                }
+              } else {
+                console.log("No Wallet.");
+                alert('No wallet.')
+              }
+            });
+          }
         if (!window.ethereum & !window.phantom & !isPhantomInstalled){
-            openApp();
+            return false;
         }
         return true;
     }
@@ -112,7 +128,6 @@ async function web3_wallet_login() {
         
     }
     else {
-        console.log('No wallet detected.');
-        alert('No wallet detected.');
+        openApp();
     }
 }
