@@ -7,9 +7,14 @@ function web3_check_existing_wallet() {
             console.log('MetaMask extension has been detected!');
         }
         if (!window.ethereum & !window.phantom & !isPhantomInstalled){
-            console.error('It seems that no wallet was detected. Please install a wallet first.');
-            alert('It seems that no wallet was detected. Please install a wallet first.');
-            return false;
+            window.addEventListener('ethereum#initialized', handleEthereum, { once: true,});
+            setTimeout(handleError, 3000);
+
+            function handleError() {
+                console.error('It seems that no wallet was detected. Please install a wallet first.');
+                alert('It seems that no wallet was detected. Please install aa wallet first.');
+                return false;
+            }
         }
         return true;
     }
