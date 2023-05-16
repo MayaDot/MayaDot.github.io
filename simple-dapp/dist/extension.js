@@ -1,11 +1,22 @@
+function isMobileDevice() {
+    return (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent));
+}
+
 function web3_check_existing_wallet() {
         const isPhantomInstalled = window?.phantom?.ethereum?.isPhantom;
+        const isMobile = isMobileDevice();
+
         if (window.phantom | isPhantomInstalled) {
             console.log('Phantom extension has been detected!');
         }
         if (window.ethereum) {
-            handleEthereum();
-            console.log('MetaMask extension has been detected!');
+            if (isMobile) {
+                console.log('MetaMask mobile app detected!');
+                handleEthereum('mobile');
+              } else {
+                console.log('MetaMask extension has been detected!');
+                handleEthereum('desktop');
+              }
         }
         if (!window.ethereum & !window.phantom & !isPhantomInstalled){
             window.addEventListener('ethereum#initialized', handleEthereum, { once: true,});
@@ -14,16 +25,19 @@ function web3_check_existing_wallet() {
         return true;
     }
 
-function handleEthereum() {
+function handleEthereum(platform = 'desktop') {
     const { ethereum } = window;
-    if (ethereum && ethereum.isMetaMask) {
+  
+    if (ethereum && ethereum.isMetaMask && platform === 'desktop') {
         console.log('Ethereum successfully detected!');
+    } else if (ethereum && platform === 'mobile') {
+        console.log('MetaMask mobile app detected!');
     } else {
         console.log('Please install MetaMask!');
         console.error('It seems that no wallet was detected. Please install a wallet first.');
-        alert('It seems that no wallet was detected. Please install aa wallet first.');
+        alert('It seems that no wallet was detected. Please install a wallet first.');
         return false;
-    }    
+    }
 }
 
 function web3_hash(){
@@ -82,5 +96,9 @@ async function web3_wallet_login() {
           }
         
         
+    }
+    else {
+        console.log('No wallet detected.');
+        alert('No wallet detected.');
     }
 }
