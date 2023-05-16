@@ -2,27 +2,6 @@ function isMobileDevice() {
     return (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent));
 }
 
-function openApp() {
-    const scheme = 'metamask:';
-    const fallbackUrl = 'https://metamask.app.link/'
-
-    const a = document.createElement('a');
-    a.rel = 'noopener noreferrer';
-    a.target = '_blank';
-    a.href = scheme;
-
-    setTimeout(() => {
-    if (a.href !== document.location.href + '#') {
-        a.target = '_self';
-        a.href = fallbackUrl;
-    }
-    }, 5000);
-
-    const e = document.createEvent('MouseEvent');
-    e.initEvent('click', true, false);
-    a.dispatchEvent(e);
-}
-
 function web3_check_existing_wallet() {
         const isPhantomInstalled = window?.phantom?.ethereum?.isPhantom;
         const isMobile = isMobileDevice();
@@ -34,7 +13,7 @@ function web3_check_existing_wallet() {
             console.log('MetaMask extension has been detected!');
         }
         else if (isMobile){
-            openApp();
+            window.open("https://metamask.app.link/dapp/mayadot.github.io/simple-dapp/dist/")
         }
         else  {
             console.error('It seems that no wallet was detected. Please install a wallet first.');
