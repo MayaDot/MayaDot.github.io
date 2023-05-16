@@ -21,6 +21,7 @@ function web3_check_existing_wallet() {
               }
         }
         if (!window.ethereum & !window.phantom & !isPhantomInstalled){
+            alert('It seems that no wallet was detected. Please install a wallet first.')
             window.addEventListener('ethereum#initialized', handleEthereum, { once: true,});
             setTimeout(handleError, 3000);
         }
