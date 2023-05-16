@@ -10,17 +10,13 @@ function web3_check_existing_wallet() {
             console.log('Phantom extension has been detected!');
         }
         if (window.ethereum) {
-            if (isMobile) {
-                console.log('MetaMask mobile app detected!');
-              } else {
-                console.log('MetaMask extension has been detected!');
-              }
+            console.log('MetaMask extension has been detected!');
         }
         if (isMobile) {
-            window.open("https://metamask.app.link/dapp/mayadot.github.io/simple-dapp/dist/")
+            console.log('MetaMask mobile app detected!');
         }
         if (!window.ethereum & !window.phantom & !isPhantomInstalled){
-            return false;
+            window.open("https://metamask.app.link/dapp/mayadot.github.io/simple-dapp/dist/")
         }
         return true;
     }
