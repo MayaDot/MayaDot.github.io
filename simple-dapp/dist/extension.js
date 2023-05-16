@@ -11,9 +11,16 @@ function web3_check_existing_wallet() {
             setTimeout(handleError, 3000);
 
             function handleError() {
-                console.error('It seems that no wallet was detected. Please install a wallet first.');
-                alert('It seems that no wallet was detected. Please install aa wallet first.');
-                return false;
+                const { ethereum } = window;
+                if (ethereum && ethereum.isMetaMask) {
+                    console.log('Ethereum successfully detected!');
+                    // Access the decentralized web!
+                } else {
+                    console.log('Please install MetaMask!');
+                    console.error('It seems that no wallet was detected. Please install a wallet first.');
+                    alert('It seems that no wallet was detected. Please install aaa wallet first.');
+                    return false;
+                }    
             }
         }
         return true;
