@@ -12,9 +12,11 @@ function web3_check_existing_wallet() {
         if (window.ethereum) {
             if (isMobile) {
                 console.log('MetaMask mobile app detected!');
+                alert('Mobile app detected.')
                 handleEthereum('mobile');
               } else {
                 console.log('MetaMask extension has been detected!');
+                alert('Desktop extension detected.')
                 handleEthereum('desktop');
               }
         }
@@ -56,13 +58,14 @@ async function web3_wallet_login() {
     // Check first if the user has a wallet installed
     if ( web3_check_existing_wallet() ) {
         console.log('Initiate Verification Process.');
+        alert('Initiate Verification Process.')
 
         // Get the Ethereum provider
         const provider = new ethers.providers.Web3Provider(window.ethereum);
         // Get Ethereum accounts
         if (isMobileDevice()) {
             try {
-              await window.ethereum.request({ method: 'eth_requestAccounts' });
+              await window.ethereum.request({ method: 'eth_requestAccounts', params: [] });
             } catch (error) {
               console.error('User denied account access');
             }
