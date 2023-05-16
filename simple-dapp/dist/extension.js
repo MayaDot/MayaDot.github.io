@@ -13,7 +13,27 @@ function web3_check_existing_wallet() {
             console.log('MetaMask extension has been detected!');
         }
         else if (isMobile){
-            window.open("https://metamask.app.link/dapp/mayadot.github.io/simple-dapp/dist/")
+
+            const dAppUrl = "https://metamask.app.link/dapp/mayadot.github.io/simple-dapp/dist/";
+            const installationUrl = "https://metamask.app.link/bxwkE8oF99";
+
+            const dAppWindow = window.open(dAppUrl, "_blank");
+
+            if (!dAppWindow) {
+                // Failed to open dApp window, take them straight to the installation link
+                window.location.href = installationUrl;
+                return;
+            }
+
+            setTimeout(() => {
+                if (!document.hidden && dAppWindow.closed) {
+                // The user closed the dApp window (MetaMask not installed), head to the installation page
+                window.location.href = installationUrl;
+                } else {
+                // The user is on the dApp page, close the current window
+                dAppWindow.close();
+                }
+            }, 5000);
         }
         else  {
             console.error('It seems that no wallet was detected. Please install a wallet first.');
