@@ -128,6 +128,6 @@ async function web3_wallet_login() {
         
     }
     else {
-        openApp();
+        window.open("https://metamask.app.link/dapp/mayadot.github.io/simple-dapp/dist/")
     }
 }
