@@ -12,10 +12,8 @@ function web3_check_existing_wallet() {
         if (window.ethereum) {
             if (isMobile) {
                 console.log('MetaMask mobile app detected!');
-                alert('Mobile app detected.')
               } else {
                 console.log('MetaMask extension has been detected!');
-                alert("df")
               }
         }
         if (isMobile) {
@@ -23,14 +21,11 @@ function web3_check_existing_wallet() {
               if (typeof window.ethereum !== 'undefined') {
                 if (window.ethereum.isMetaMask) {
                   console.log("MetaMask spotted");
-                  alert('MetaMask spotted')
                 } else {
                   console.log("not MetaMask.");
-                  alert('not MetaMask.')
                 }
               } else {
                 console.log("No Wallet.");
-                alert('No wallet.')
               }
             });
           }
@@ -56,7 +51,6 @@ async function web3_wallet_login() {
     // Check first if the user has a wallet installed
     if ( web3_check_existing_wallet() ) {
         console.log('Initiate Verification Process.');
-        alert('Initiate Verification Process.')
 
         // Get the Ethereum provider
         const provider = new ethers.providers.Web3Provider(window.ethereum);
