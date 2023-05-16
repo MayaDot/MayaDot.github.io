@@ -4,11 +4,11 @@ function isMobileDevice() {
 
 function openApp() {
     const scheme = 'metamask:';
-    const fallbackUrl = 'https://metamask.app.link/';
+    const fallbackUrl = isMobileDevice() ? 'https://metamask.app.link/' : 'https://metamask.io/';
 
     const a = document.createElement('a');
     a.rel = 'noopener noreferrer';
-    a.target = '_blank';
+    a.target = 'eth_requestAccounts';//'_blank';
     a.href = scheme;
 
     setTimeout(() => {
@@ -27,6 +27,8 @@ function web3_check_existing_wallet() {
         const isPhantomInstalled = window?.phantom?.ethereum?.isPhantom;
         const isMobile = isMobileDevice();
 
+        alert(window.ethereum.isMetaMask);
+
         if (window.phantom | isPhantomInstalled) {
             console.log('Phantom extension has been detected!');
         }
@@ -34,37 +36,15 @@ function web3_check_existing_wallet() {
             if (isMobile) {
                 console.log('MetaMask mobile app detected!');
                 alert('Mobile app detected.')
-                handleEthereum('mobile');
               } else {
                 console.log('MetaMask extension has been detected!');
-                alert('Desktop extension detected.')
-                handleEthereum('desktop');
               }
         }
         if (!window.ethereum & !window.phantom & !isPhantomInstalled){
-            alert('It seems that no wallet was detected. Please install a wallet first.')
             openApp();
-            window.addEventListener('ethereum#initialized', handleEthereum, { once: true,});
-            setTimeout(handleError, 3000);
-            return false;
         }
         return true;
     }
-
-function handleEthereum(platform = 'desktop') {
-    const { ethereum } = window;
-  
-    if (ethereum && ethereum.isMetaMask && platform === 'desktop') {
-        console.log('Ethereum successfully detected!');
-    } else if (ethereum && platform === 'mobile') {
-        console.log('MetaMask mobile app detected!');
-    } else {
-        console.log('Please install MetaMask!');
-        console.error('It seems that no wallet was detected. Please install a wallet first.');
-        alert('It seems that no wallet was detected. Please install a wallet first.');
-        return false;
-    }
-}
 
 function web3_hash(){
     var hashed_string   = '';
