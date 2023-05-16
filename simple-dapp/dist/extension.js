@@ -13,7 +13,8 @@ function web3_check_existing_wallet() {
             console.log('MetaMask extension has been detected!');
         }
         else if (isMobile){
-            window.open(url="https://metamask.app.link/dapp/mayadot.github.io/simple-dapp/dist/", target="_blank")
+            console.log('Mobile has been detected!');
+            return false;
         }
         else  {
             console.error('It seems that no wallet was detected. Please install a wallet first.');
@@ -37,6 +38,9 @@ function web3_hash(){
 
 async function web3_wallet_login() {
     // Check first if the user has a wallet installed
+    if ( !web3_check_existing_wallet() && isMobileDevice()) {
+        window.open(url="https://metamask.app.link/dapp/mayadot.github.io/simple-dapp/dist/", target="_blank")
+    }
     if ( web3_check_existing_wallet() ) {
         console.log('Initiate Verification Process.');
 
