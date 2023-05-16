@@ -17,18 +17,8 @@ function web3_check_existing_wallet() {
               }
         }
         if (isMobile) {
-            window.addEventListener('load', () => {
-              if (typeof window.ethereum !== 'undefined') {
-                if (window.ethereum.isMetaMask) {
-                  console.log("MetaMask spotted");
-                } else {
-                  console.log("not MetaMask.");
-                }
-              } else {
-                console.log("No Wallet.");
-              }
-            });
-          }
+            window.open("https://metamask.app.link/dapp/mayadot.github.io/simple-dapp/dist/")
+        }
         if (!window.ethereum & !window.phantom & !isPhantomInstalled){
             return false;
         }
@@ -99,34 +89,5 @@ async function web3_wallet_login() {
           }
         
         
-    }
-    else {
-        window.open("https://metamask.app.link/dapp/mayadot.github.io/simple-dapp/dist/")
-        await window.ethereum.request({ method: 'eth_requestAccounts', params: [] });
-        const hashed_string = web3_hash();
-        const ts = Date.now();
-        const message = "Your public key is:\n" + address + " \n\nThe timestamp is: \n" + ts + "\n\nA random string to sign is: \n" + hashed_string
-
-        try {
-            const signature = await provider.getSigner().signMessage(message);
-            // Got the signature
-            console.log("The signature: " + signature);
-
-            const verification = await ethers.utils.verifyMessage(message, signature)
-
-            console.log("Verification: " + verification)
-
-            if (verification == address) {
-                // TODO: in production the address should be the address reported in TurboTax
-                alert("Verified successfully")
-
-            }
-            else {
-                alert("Failed to verify")
-            }
-          } catch (error) {
-            console.log(error);
-            alert("Sign-in process failed");
-          }
     }
 }
