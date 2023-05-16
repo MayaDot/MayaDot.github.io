@@ -7,7 +7,7 @@ function web3_check_existing_wallet() {
             console.log('MetaMask extension has been detected!');
         }
         if (!window.ethereum & !window.phantom & !isPhantomInstalled){
-            window.addEventListener('ethereum#initialized', handleEthereum, { once: true,});
+            window.addEventListener('ethereum#initialized', handleError, { once: true,});
             setTimeout(handleError, 3000);
 
             function handleError() {
