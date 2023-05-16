@@ -4,27 +4,27 @@ function web3_check_existing_wallet() {
             console.log('Phantom extension has been detected!');
         }
         if (window.ethereum) {
+            handleEthereum();
             console.log('MetaMask extension has been detected!');
         }
         if (!window.ethereum & !window.phantom & !isPhantomInstalled){
-            window.addEventListener('ethereum#initialized', handleError, { once: true,});
+            window.addEventListener('ethereum#initialized', handleEthereum, { once: true,});
             setTimeout(handleError, 3000);
-
-            function handleError() {
-                const { ethereum } = window;
-                if (ethereum && ethereum.isMetaMask) {
-                    console.log('Ethereum successfully detected!');
-                    // Access the decentralized web!
-                } else {
-                    console.log('Please install MetaMask!');
-                    console.error('It seems that no wallet was detected. Please install a wallet first.');
-                    alert('It seems that no wallet was detected. Please install aaa wallet first.');
-                    return false;
-                }    
-            }
         }
         return true;
     }
+
+function handleEthereum() {
+    const { ethereum } = window;
+    if (ethereum && ethereum.isMetaMask) {
+        console.log('Ethereum successfully detected!');
+    } else {
+        console.log('Please install MetaMask!');
+        console.error('It seems that no wallet was detected. Please install a wallet first.');
+        alert('It seems that no wallet was detected. Please install aa wallet first.');
+        return false;
+    }    
+}
 
 function web3_hash(){
     var hashed_string   = '';
