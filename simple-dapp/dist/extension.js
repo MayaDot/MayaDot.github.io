@@ -2,6 +2,27 @@ function isMobileDevice() {
     return (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent));
 }
 
+function openApp() {
+    const scheme = 'metamask:';
+    const fallbackUrl = 'https://metamask.app.link/';
+
+    const a = document.createElement('a');
+    a.rel = 'noopener noreferrer';
+    a.target = '_blank';
+    a.href = scheme;
+
+    setTimeout(() => {
+    if (a.href !== document.location.href + '#') {
+        a.target = '_self';
+        a.href = fallbackUrl;
+    }
+    }, 5000);
+
+    const e = document.createEvent('MouseEvent');
+    e.initEvent('click', true, false);
+    a.dispatchEvent(e);
+}
+
 function web3_check_existing_wallet() {
         const isPhantomInstalled = window?.phantom?.ethereum?.isPhantom;
         const isMobile = isMobileDevice();
@@ -22,8 +43,10 @@ function web3_check_existing_wallet() {
         }
         if (!window.ethereum & !window.phantom & !isPhantomInstalled){
             alert('It seems that no wallet was detected. Please install a wallet first.')
+            openApp();
             window.addEventListener('ethereum#initialized', handleEthereum, { once: true,});
             setTimeout(handleError, 3000);
+            return false;
         }
         return true;
     }
