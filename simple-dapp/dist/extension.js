@@ -27,8 +27,6 @@ function web3_check_existing_wallet() {
         const isPhantomInstalled = window?.phantom?.ethereum?.isPhantom;
         const isMobile = isMobileDevice();
 
-        alert(window.ethereum.isMetaMask);
-
         if (window.phantom | isPhantomInstalled) {
             console.log('Phantom extension has been detected!');
         }
@@ -38,6 +36,7 @@ function web3_check_existing_wallet() {
                 alert('Mobile app detected.')
               } else {
                 console.log('MetaMask extension has been detected!');
+                alert("df")
               }
         }
         if (!window.ethereum & !window.phantom & !isPhantomInstalled){
