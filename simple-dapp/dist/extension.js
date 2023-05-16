@@ -60,7 +60,15 @@ async function web3_wallet_login() {
         // Get the Ethereum provider
         const provider = new ethers.providers.Web3Provider(window.ethereum);
         // Get Ethereum accounts
-        await provider.send("eth_requestAccounts", []);
+        if (isMobileDevice()) {
+            try {
+              await window.ethereum.request({ method: 'eth_requestAccounts' });
+            } catch (error) {
+              console.error('User denied account access');
+            }
+        } else {
+            await provider.send('eth_requestAccounts', []);
+        }
         console.log("Connected!!");
         // Get the User Ethereum address
         // TODO: In production we should change this to be the address reported by the user in Turbotax!!!!
