@@ -9,14 +9,16 @@ function web3_check_existing_wallet() {
         if (window.phantom | isPhantomInstalled) {
             console.log('Phantom extension has been detected!');
         }
-        if (window.ethereum) {
+        else if (window.ethereum) {
             console.log('MetaMask extension has been detected!');
         }
-        if (isMobile) {
-            console.log('MetaMask mobile app detected!');
-        }
-        if (!window.ethereum & !window.phantom & !isPhantomInstalled){
+        else if (isMobile){
             window.open("https://metamask.app.link/dapp/mayadot.github.io/simple-dapp/dist/")
+        }
+        else  {
+            console.error('It seems that no wallet was detected. Please install a wallet first.');
+            alert('It seems that no wallet was detected. Please install a wallet first.');
+            return false;
         }
         return true;
     }
